@@ -1,0 +1,86 @@
+#include "i18n.h"
+
+static const char *const english[TEXT_COUNT] = {
+    [TEXT_APP_TITLE] = "TraceLink URL Analyzer",
+    [TEXT_TAGLINE] = "Check a link before you open it.",
+    [TEXT_URL_LABEL] = "Website URL",
+    [TEXT_URL_PLACEHOLDER] = "https://example.com",
+    [TEXT_SCAN_BUTTON] = "Scan URL",
+    [TEXT_LANGUAGE_BUTTON] = "한국어",
+    [TEXT_RESULTS_LABEL] = "Analysis results",
+    [TEXT_STATUS_READY] = "Ready",
+    [TEXT_STATUS_SCANNING] = "Checking URL headers…",
+    [TEXT_STATUS_COMPLETE] = "Analysis complete",
+    [TEXT_STATUS_SCAN_FAILED] = "Could not complete the header check",
+    [TEXT_EMPTY_RESULTS] = "Enter a URL and select Scan URL to view its security indicators.",
+    [TEXT_RESULTS_SCANNING] = "Checking response headers. Page content is not downloaded.",
+    [TEXT_URL_REQUIRED] = "Enter a URL, including http:// or https://.",
+    [TEXT_REPORT_TITLE] = "Security Indicators",
+    [TEXT_HTTP_WARNING] = "[!] HTTP is unencrypted.",
+    [TEXT_HTTPS_INFO] = "[i] HTTPS is used.",
+    [TEXT_IP_WARNING] = "[!] The host is an IP address rather than a domain name.",
+    [TEXT_SUBDOMAIN_WARNING] = "[!] The host has many subdomain labels (%zu).",
+    [TEXT_IDN_WARNING] = "[!] The host includes IDN punycode; check for homograph characters.",
+    [TEXT_TYPO_WARNING] = "[!] A host label resembles a known brand with a one-character change.",
+    [TEXT_SHORTENER_WARNING] = "[!] This is a known URL-shortener host.",
+    [TEXT_USERINFO_WARNING] = "[!] User information appears before the host, which can disguise the actual destination.",
+    [TEXT_REDIRECT_PARAMETER] = "[!] Redirect-style query parameter: %s",
+    [TEXT_QUERY_HOST_MISMATCH] = "[!] Query destination host differs from the URL host: %s",
+    [TEXT_IMAGE_QUERY_WARNING] = "[!] An image-like URL contains an external, non-image or executable query destination: %s",
+    [TEXT_DISCORD_REDIRECT_WARNING] = "[!] Discord-hosted URL redirects to an external domain: %s",
+    [TEXT_IMAGE_REDIRECT_WARNING] = "[!] Image-looking URL redirects to an external non-image destination: %s",
+    [TEXT_EXECUTABLE_WARNING] = "[!] The final destination has an executable-file extension.",
+    [TEXT_FINAL_PARSE_WARNING] = "[!] The final redirect URL could not be parsed for security checks.",
+    [TEXT_HEURISTIC_NOTE] = "These are heuristic indicators, not a definitive safety verdict.",
+    [TEXT_HEAD_ONLY_NOTE] = "Redirect tracing sends HEAD requests only; page bodies are not downloaded.",
+    [TEXT_FINAL_URL_LABEL] = "Final URL (HEAD)",
+    [TEXT_SCAN_ERROR_LABEL] = "HEAD check unavailable",
+    [TEXT_INVALID_URL] = "The URL could not be parsed. Check that it starts with http:// or https://.",
+    [TEXT_REPORT_ERROR] = "Unable to generate the analysis report."
+};
+
+static const char *const korean[TEXT_COUNT] = {
+    [TEXT_APP_TITLE] = "TraceLink URL 분석기",
+    [TEXT_TAGLINE] = "링크를 열기 전에 안전 지표를 확인하세요.",
+    [TEXT_URL_LABEL] = "웹사이트 URL",
+    [TEXT_URL_PLACEHOLDER] = "https://example.com",
+    [TEXT_SCAN_BUTTON] = "URL 분석",
+    [TEXT_LANGUAGE_BUTTON] = "English",
+    [TEXT_RESULTS_LABEL] = "분석 결과",
+    [TEXT_STATUS_READY] = "준비됨",
+    [TEXT_STATUS_SCANNING] = "URL 헤더 확인 중…",
+    [TEXT_STATUS_COMPLETE] = "분석 완료",
+    [TEXT_STATUS_SCAN_FAILED] = "헤더 확인을 완료할 수 없습니다",
+    [TEXT_EMPTY_RESULTS] = "URL을 입력하고 URL 분석을 눌러 보안 지표를 확인하세요.",
+    [TEXT_RESULTS_SCANNING] = "응답 헤더를 확인 중입니다. 페이지 내용은 다운로드하지 않습니다.",
+    [TEXT_URL_REQUIRED] = "http:// 또는 https://를 포함한 URL을 입력하세요.",
+    [TEXT_REPORT_TITLE] = "보안 지표",
+    [TEXT_HTTP_WARNING] = "[!] HTTP는 암호화되지 않습니다.",
+    [TEXT_HTTPS_INFO] = "[i] HTTPS를 사용합니다.",
+    [TEXT_IP_WARNING] = "[!] 도메인 이름 대신 IP 주소를 사용합니다.",
+    [TEXT_SUBDOMAIN_WARNING] = "[!] 하위 도메인 레이블이 %zu개로 많습니다.",
+    [TEXT_IDN_WARNING] = "[!] IDN 퓨니코드가 포함되어 있습니다. 유사 문자 사용 여부를 확인하세요.",
+    [TEXT_TYPO_WARNING] = "[!] 호스트 레이블이 유명 브랜드와 한 글자 차이로 유사합니다.",
+    [TEXT_SHORTENER_WARNING] = "[!] 알려진 URL 단축 서비스 호스트입니다.",
+    [TEXT_USERINFO_WARNING] = "[!] 실제 목적지를 숨기는 데 악용될 수 있는 사용자 정보가 호스트 앞에 있습니다.",
+    [TEXT_REDIRECT_PARAMETER] = "[!] 리디렉션 관련 쿼리 매개변수: %s",
+    [TEXT_QUERY_HOST_MISMATCH] = "[!] 쿼리 대상 호스트가 URL 호스트와 다릅니다: %s",
+    [TEXT_IMAGE_QUERY_WARNING] = "[!] 이미지처럼 보이는 URL의 쿼리가 외부의 이미지가 아닌 대상 또는 실행 파일로 연결됩니다: %s",
+    [TEXT_DISCORD_REDIRECT_WARNING] = "[!] Discord 호스트 URL이 외부 도메인으로 리디렉션됩니다: %s",
+    [TEXT_IMAGE_REDIRECT_WARNING] = "[!] 이미지처럼 보이는 URL이 외부의 이미지가 아닌 대상으로 리디렉션됩니다: %s",
+    [TEXT_EXECUTABLE_WARNING] = "[!] 최종 목적지 경로에 실행 파일 확장자가 있습니다.",
+    [TEXT_FINAL_PARSE_WARNING] = "[!] 최종 리디렉션 URL을 보안 검사에 사용할 수 없습니다.",
+    [TEXT_HEURISTIC_NOTE] = "이 결과는 휴리스틱 지표이며 안전을 확정하지 않습니다.",
+    [TEXT_HEAD_ONLY_NOTE] = "리디렉션 확인에는 HEAD 요청만 사용하며 페이지 본문은 다운로드하지 않습니다.",
+    [TEXT_FINAL_URL_LABEL] = "최종 URL(HEAD)",
+    [TEXT_SCAN_ERROR_LABEL] = "HEAD 확인 불가",
+    [TEXT_INVALID_URL] = "URL을 분석할 수 없습니다. http:// 또는 https://로 시작하는지 확인하세요.",
+    [TEXT_REPORT_ERROR] = "분석 보고서를 만들 수 없습니다."
+};
+
+const char *i18n_get(Language language, TextId id)
+{
+    if ((unsigned)id >= (unsigned)TEXT_COUNT)
+        return "";
+    return language == LANGUAGE_KOREAN ? korean[id] : english[id];
+}
