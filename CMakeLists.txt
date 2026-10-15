@@ -53,7 +53,10 @@ if(WIN32)
             LINK_FLAGS "/MANIFEST:NO"
         )
     endif()
-    set_target_properties(url_analyzer PROPERTIES OUTPUT_NAME "TraceLinkAnalyzer")
+    set_target_properties(url_analyzer PROPERTIES
+        OUTPUT_NAME "TraceLinkAnalyzer"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/output/$<CONFIG>"
+    )
 else()
     add_executable(url_analyzer
         src/main.c

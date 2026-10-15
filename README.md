@@ -27,29 +27,22 @@ CMakeLists.txt
 
 ## Windows GUI build
 
-Install CMake 3.28+, a C11 compiler (Visual Studio or MinGW-w64), and the **static**
-libcurl 7.62+ development package. Make sure CMake can find that package and
-its static dependencies. Then, from the project directory:
+Install CMake 3.28+, a C11 compiler (Visual Studio or MinGW-w64), and vcpkg at
+`C:\vcpkg` with the `curl:x64-windows-static` package installed. From
+PowerShell in the project directory, run:
 
 ```powershell
-cmake -S . -B build
-cmake --build build --config Release
+.\build-release.ps1
 ```
 
-With Visual Studio, the application is produced at
-`build\Release\TraceLinkAnalyzer.exe`. With a single-configuration MinGW
-generator, it is at `build\TraceLinkAnalyzer.exe`. The Windows target is a GUI
-subsystem application and CMake prefers static libcurl; MinGW links statically
-to its runtime as well. A static libcurl build and its TLS dependencies are
-required for a single-file executable. If the selected libcurl package is
-shared-only, the executable will need its DLL dependencies alongside it.
-
-For example, to select the MinGW generator:
-
-```powershell
-cmake -S . -B build -G "MinGW Makefiles"
-cmake --build build --config Release
-```
+The script builds the Release GUI executable in a temporary project-root build
+directory, copies `TraceLinkAnalyzer.exe` directly into the project root, then
+removes the `build\`, `bin\`, and `obj\` directories even if configuration or
+compilation fails. CMake is configured automatically with the vcpkg toolchain
+and `x64-windows-static` triplet. Once the build succeeds, double-click
+`TraceLinkAnalyzer.exe` in the root folder to start the application. The static
+triplet and static C runtime allow the application to be distributed as a
+single executable.
 
 ## Non-Windows console build
 
